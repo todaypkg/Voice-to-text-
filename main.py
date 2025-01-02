@@ -3,16 +3,19 @@ import whisper
 from telethon import TelegramClient, events
 
 # إعداد متغيرات Telegram API من البيئة
-api_id = int(os.getenv('API_ID'))
-api_hash = os.getenv('API_HASH')
-username = os.getenv('USERNAME')
-target_channel = os.getenv('TARGET_CHANNEL')
+api_id = int(os.getenv('API_ID'))  # API ID من Telegram
+api_hash = os.getenv('API_HASH')  # API Hash من Telegram
+username = os.getenv('USERNAME')  # اسم المستخدم أو الجلسة
+target_channel = os.getenv('TARGET_CHANNEL')  # قناة Telegram المستهدفة
+
+# اسم الجلسة يتم تخزينه في متغير بيئة (مثلاً TELETHON_SESSION)
+session_name = os.getenv('TELETHON_SESSION', 'my_session')  # اسم الجلسة يمكن تغييره حسب الحاجة
 
 # إنشاء العميل
-client = TelegramClient(username, api_id, api_hash)
+client = TelegramClient(session_name, api_id, api_hash)
 
-# تحميل نموذج Whisper (استخدم نموذج صغير لتوفير الموارد في الخطة المجانية)
-model = whisper.load_model("base")
+# تحميل نموذج Whisper
+model = whisper.load_model("base")  # يمكن استخدام نموذج أصغر لتقليل استهلاك الموارد
 
 # التعامل مع أمر .تحويل
 @client.on(events.NewMessage(pattern=r'\.تحويل'))
