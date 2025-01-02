@@ -2,3 +2,5 @@ telethon
 openai-whisper
 ffmpeg-python
 flask
+telethon==1.25.0
+whisper
